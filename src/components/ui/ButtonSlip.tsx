@@ -1,0 +1,31 @@
+'use client'
+import { CiImageOn } from "react-icons/ci";
+import { toast } from "sonner";
+
+type ButtonSlipProps = {
+  photoUrl: string;
+};
+
+const ButtonSlip = ({ photoUrl }: ButtonSlipProps) => {
+  const handleOpenSlip = () => {
+    if (photoUrl) {
+      window.open(photoUrl, "_blank");
+    } else {
+      toast.error("ไม่พบลิงก์สลิป");
+    }
+  };
+
+  return (
+    <button
+      onClick={handleOpenSlip}
+      className="cursor-pointer w-full h-10 border border-black/20 rounded-sm text-black bg-white hover:bg-gray-100"
+    >
+      <div className="flex items-center justify-center gap-1">
+        <CiImageOn />
+        <p>กดเพื่อดูสลิป</p>
+      </div>
+    </button>
+  );
+};
+
+export default ButtonSlip;

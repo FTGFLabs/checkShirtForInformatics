@@ -14,7 +14,17 @@
 }
 
 body {
-  background: var(--background);
+  position: relative;
+  background: url('/if.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* สีดำจาง */
+  z-index: -1;
 }
