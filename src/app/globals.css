@@ -15,7 +15,7 @@
 
 body {
   position: relative;
-  background: url('/if.jpg') no-repeat center center fixed;
+  background: url('/if.webp') no-repeat center center fixed;
   background-size: cover;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
@@ -23,7 +23,7 @@ body {
 
 body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.7); /* สีดำจาง */
   z-index: -1;
