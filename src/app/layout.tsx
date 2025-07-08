@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from 'sonner'
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,10 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="vsc-initialized">
-        <div className="min-h-screen overflow-hidden items-center content-center bg-[#F9FAFB]">
+        <div className="min-h-screen overflow-hidden items-center content-center">
           {children}
         </div>
         <Toaster position="top-center" richColors />
+        <Footer />
       </body>
     </html>
   );
