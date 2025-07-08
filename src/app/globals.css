@@ -15,7 +15,7 @@
 
 body {
   position: relative;
-  background: url('/if.jpg') no-repeat center center fixed;
+  background: url('/if.webp') no-repeat center center fixed;
   background-size: cover;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
