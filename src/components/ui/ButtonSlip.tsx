@@ -18,7 +18,7 @@ const ButtonSlip = ({ photoUrl }: ButtonSlipProps) => {
   return (
     <button
       onClick={handleOpenSlip}
-      className="cursor-pointer w-full h-10 border border-black/20 rounded-sm text-black bg-white hover:bg-gray-100"
+      className="cursor-pointer w-full h-10 border border-black/20 rounded-sm text-white bg-green-500 hover:bg-green-600"
     >
       <div className="flex items-center justify-center gap-1">
         <CiImageOn />
