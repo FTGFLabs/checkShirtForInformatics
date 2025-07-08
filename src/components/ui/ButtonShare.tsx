@@ -17,7 +17,7 @@ const ButtonShare = () => {
         await navigator.clipboard.writeText(myUrl);
         toast.success("Share link copied to clipboard!");
     }
-    } catch (error) {
+    } catch{
       toast.error("Failed to share. Please try again.");
     }
 };
