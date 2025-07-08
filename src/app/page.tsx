@@ -5,7 +5,7 @@ import ButtonShare from "@/components/ui/ButtonShare";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { kMaxLength } from "buffer";
+import ButtonSlip from "@/components/ui/ButtonSlip";
 
 type Student = {
   id: string;
@@ -61,7 +61,7 @@ export default function StudentSearch() {
   };
 
   return (
-    <div className="max-w-md mx-4 md:mx-auto p-10 font-sans shadow-xl rounded-lg bg-[#FFF] text-black space-y-2">
+    <div className="max-w-md mx-4 md:mx-auto p-10 md:p-18 font-sans shadow-xl rounded-lg bg-[#FFF] text-black space-y-2">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold text-center">ตรวจสอบเสื้อโปโล</h1>
         <h2 className="text-sm text-center text-gray-400">
@@ -97,36 +97,39 @@ export default function StudentSearch() {
         />
         <button
           type="submit"
-          className={`w-full ${searchId.length !== 8 ? "opacity-50 border border-gray-300 cursor-not-allowed" :"bg-blue-600 hover:bg-blue-700 text-white"}   font-semibold py-2 px-4 rounded-md shadow`}
+          className={`w-full shadow-sm ${
+            searchId.length !== 8
+              ? "opacity-50 border border-black/20 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 text-white"
+          }   font-semibold py-2 px-4 rounded-md shadow`}
         >
           ค้นหา
         </button>
       </form>
 
       {student && (
-        <div className="p-4 space-y-2 text-lg ">
-          <p>
-            <strong>รหัสนิสิต:</strong> {student.id}
-          </p>
-          <p>
-            <strong>ชื่อ:</strong> {student.name}
-          </p>
-          <p>
-            <strong>สาขา:</strong> {student.group}
-          </p>
-          <p>
-            <strong>ขนาดเสื้อ:</strong> {student.size}
-          </p>
-          <p>
-            <strong>จำนวน:</strong> {student.total}
-          </p>
-          <p>
-            <strong>สถานะ:</strong> {student.status}
-          </p>
-          <div className="flex">
-            <p>ตรวจสอบสลิป</p>
-            <a href={student.photo}>click</a>
+        <div>
+          <div className="p-2 space-y-2 text-lg">
+            <h2>
+              <strong>รหัสนิสิต:</strong> {student.id}
+            </h2>
+            <p>
+              <strong>ชื่อ:</strong> {student.name}
+            </p>
+            <p>
+              <strong>สาขา:</strong> {student.group}
+            </p>
+            <p>
+              <strong>ขนาดเสื้อ:</strong> {student.size}
+            </p>
+            <p>
+              <strong>จำนวน:</strong> {student.total}
+            </p>
+            <p>
+              <strong>สถานะ:</strong> {student.status}
+            </p>
           </div>
+          <ButtonSlip photoUrl={student.photo} />
         </div>
       )}
 
