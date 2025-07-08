@@ -15,6 +15,7 @@ type Student = {
   total: string;
   status: string;
   photo: string;
+  [key: string]: string;
 };
 
 export default function StudentSearch() {
@@ -27,7 +28,7 @@ export default function StudentSearch() {
     fetch("https://opensheet.elk.sh/14qcjBVzPtH6mYoIc_qLKaFhLpNjFtLm-xpotoPSDWts/sheet1")
       .then((res) => res.json())
       .then((json) => {
-        const formatted = json.map((row: any) => ({
+        const formatted = json.map((row: Student) => ({
           id: row["รหัสนิสิต"]?.trim(),
           name: row["ชื่อ-สกุล"],
           group: row["สาขา"],
@@ -37,6 +38,8 @@ export default function StudentSearch() {
           photo: row["หลักฐานการชำระเงิน"]
         }));
         setData(formatted);
+      }).catch((error) =>{
+        toast.error("ไม่สามารถโหลดข้อมูลได้")
       });
   }, []);
 
