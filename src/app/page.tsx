@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import ButtonSlip from "@/components/ui/ButtonSlip";
+import Footer from "@/components/Footer";
 
 type Student = {
   id: string;
@@ -15,6 +16,7 @@ type Student = {
   total: string;
   status: string;
   photo: string;
+  note: string;
   [key: string]: string;
 };
 
@@ -35,7 +37,8 @@ export default function StudentSearch() {
           size: row["ขนาดเสื้อโปโลที่ต้องการ"],
           total: row["จำนวนเสื้อโปโล (ตัว)"],
           status: row["สถานะ"],
-          photo: row["หลักฐานการชำระเงิน"]
+          photo: row["หลักฐานการชำระเงิน"],
+          note: row["หมายเหตุ กรณีสั่งแยกไซส์"]
         }));
         setData(formatted);
       }).catch((error) =>{
@@ -53,6 +56,7 @@ export default function StudentSearch() {
     if (found) {
       setStudent(found);
       setError("");
+      setSearchId("");
       toast.success(`พบข้อมูลนิสิต ${found.id}`);
     } else {
       setStudent(null);
@@ -64,11 +68,11 @@ export default function StudentSearch() {
   };
 
   return (
-    <div className="max-w-md mx-4 md:mx-auto p-10 md:p-18 font-sans shadow-xl rounded-lg bg-[#FFF] text-black space-y-2">
+    <div className="max-w-md mx-4 my-2 md:mx-auto p-8 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 ">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold text-center">ตรวจสอบเสื้อโปโล</h1>
         <h2 className="text-sm text-center text-gray-400">
-          คณะวิทยาการสารสนเทศ
+          คณะวิทยาการสารสนเทศ มหาวิทยาลัยบูรพา
         </h2>
       </div>
 
@@ -102,15 +106,50 @@ export default function StudentSearch() {
           type="submit"
           className={`w-full shadow-sm ${
             searchId.length !== 8
-              ? "opacity-50 border border-black/20 cursor-not-allowed"
+              ? "opacity-70 border border-black/20 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700 text-white"
           }   font-semibold py-2 px-4 rounded-md shadow`}
         >
           ค้นหา
         </button>
       </form>
-
       {student && (
+        <div className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-800">
+          <h2 className="text-xl font-semibold mb-4 text-center">
+            ข้อมูลนิสิต
+          </h2>
+          <div className="space-y-2 text-base">
+            <p>
+              <strong>รหัสนิสิต:</strong> {student.id}
+            </p>
+            <p>
+              <strong>ชื่อ:</strong> {student.name}
+            </p>
+            <p>
+              <strong>สาขา:</strong> {student.group}
+            </p>
+            <p>
+              <strong>ขนาดเสื้อ:</strong> {student.size}
+            </p>
+            <p>
+              <strong>จำนวน:</strong> {student.total}
+            </p>
+            {student.note !== "-" && (
+              <p>
+                <strong>หมายเหตุ:</strong> {student.note}
+              </p>
+            )}
+            <p>
+              <strong>สถานะ:</strong> {student.status}
+            </p>
+          </div>
+          <div className="mt-4 flex justify-center">
+            <ButtonSlip photoUrl={student.photo} />
+          </div>
+        </div>
+      )}
+
+      {/* {student && (
         <div>
           <div className="p-2 space-y-2 text-lg">
             <h2>
@@ -128,18 +167,25 @@ export default function StudentSearch() {
             <p>
               <strong>จำนวน:</strong> {student.total}
             </p>
+            {student.note !== "-" && (
+              <p>
+                <strong>หมายเหตุ:</strong> {student.note}
+              </p>
+            )}
             <p>
               <strong>สถานะ:</strong> {student.status}
             </p>
           </div>
           <ButtonSlip photoUrl={student.photo} />
         </div>
-      )}
+      )} */}
 
+      <hr className="border-t border-gray-300 my-4" />
       <div className="flex gap-4">
         <ButtonShare />
         <ButtonContact />
       </div>
+      <Footer />
     </div>
   );
 }
