@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="vsc-initialized">
-                <div className="min-h-screen overflow-hidden">{children}</div>
+                <div className="min-h-screen overflow-hidden items-center content-center bg-[#F9FAFB]">{children}</div>
       </body>
     </html>
   );

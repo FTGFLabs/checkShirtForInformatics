@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
 
 export default function StudentSearch() {
   const [data, setData] = useState([]);
@@ -27,7 +28,6 @@ export default function StudentSearch() {
   const handleSearch = () => {
     const found = data.find((s) => s.id === searchId.trim());
     if (found) {
-      console.log()
       setStudent(found);
       setError("");
     } else {
@@ -37,31 +37,40 @@ export default function StudentSearch() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-8 font-sans shadow ">
-      <h1 className="text-2xl font-semibold text-center mb-6">
-        🔍 ตรวจสอบเสื้อโปโล
-      </h1>
+    <div className="max-w-md mx-4 md:mx-auto p-10 font-sans shadow-xl rounded-lg bg-[#FFF]">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl font-semibold text-center">
+          ตรวจสอบเสื้อโปโล
+        </h1>
+        <h2 className="text-sm text-center text-gray-400">
+          คณะวิทยาการสารสนเทศ
+        </h2>
+      </div>
 
-      <div className="flex items-center gap-2 mb-6">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearch();
+        }}
+        className="space-y-2"
+      >
+        <div className="flex content-center gap-2 items-center">
+          <FaUser />
+          <h3>รหัสนิสิต</h3>
+        </div>
         <input
           type="text"
           placeholder="กรอกรหัสนิสิต"
-          className="flex-1 border rounded px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border-none flex h-9 w-full rounded-md border border-input bg-transparent px-4 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm space-y-2"
           value={searchId}
           onChange={(e) => setSearchId(e.target.value)}
         />
-        <button
-          onClick={handleSearch}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-        >
-          ค้นหา
-        </button>
-      </div>
+      </form>
 
-      {error && <p className="text-center text-red-500 mb-4">{error}</p>}
+      {error && <p className="text-center text-red-500 p-4">{error}</p>}
 
       {student && (
-        <div className="p-4 space-y-2 text-sm ">
+        <div className="p-4 space-y-2 text-lg ">
           <p>
             <strong>📌 รหัสนิสิต:</strong> {student.id}
           </p>
@@ -80,8 +89,10 @@ export default function StudentSearch() {
           <p>
             <strong>✅ สถานะ:</strong> {student.status}
           </p>
-
-          <a href={student.photo}>click to show image</a>
+          <div className="flex">
+          <p>ตรวจสอบสลิป</p>
+          <a href={student.photo}>click</a>
+          </div>
         </div>
       )}
     </div>
