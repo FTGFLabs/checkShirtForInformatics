@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import ButtonSlip from "@/components/ui/ButtonSlip";
 import Footer from "@/components/Footer";
+import { Input } from "@/components/ui/input";
 
 type Student = {
   id: string;
@@ -46,6 +47,7 @@ export default function StudentSearch() {
       });
   }, []);
 
+  
   const handleSearch = () => {
     if (searchId.length !== 8){
       toast.error("กรุณากรอกรหัสนิสิตให้ครบ 8 หลัก");  
@@ -68,7 +70,7 @@ export default function StudentSearch() {
   };
 
   return (
-    <div className="max-w-md mx-4 my-2 md:mx-auto p-8 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 ">
+    <div className="max-w-md  m-4 p-8 h-auto w-200 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 items-center justify-center content-center ">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold text-center">ตรวจสอบเสื้อโปโล</h1>
         <h2 className="text-sm text-center text-gray-400">
@@ -87,16 +89,14 @@ export default function StudentSearch() {
           <FaUser />
           <h3>รหัสนิสิต</h3>
         </div>
-        <input
-          type="text"
+        <Input
           inputMode="numeric"
           maxLength={8}
           placeholder="กรอกรหัสนิสิต 8 หลัก"
-          className="border border-black/20  flex h-10 w-full rounded-md  border-input bg-transparent px-4 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm space-y-2"
           value={searchId}
           onChange={(e) => {
+            // regEx limit number length 8
             const value = e.target.value;
-            // regEx
             if (/^\d{0,8}$/.test(value)) {
               setSearchId(value);
             }
@@ -113,6 +113,8 @@ export default function StudentSearch() {
           ค้นหา
         </button>
       </form>
+
+      {/* show when have data */}
       {student && (
         <div className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-800">
           <h2 className="text-xl font-semibold mb-4 text-center">
@@ -149,37 +151,7 @@ export default function StudentSearch() {
         </div>
       )}
 
-      {/* {student && (
-        <div>
-          <div className="p-2 space-y-2 text-lg">
-            <h2>
-              <strong>รหัสนิสิต:</strong> {student.id}
-            </h2>
-            <p>
-              <strong>ชื่อ:</strong> {student.name}
-            </p>
-            <p>
-              <strong>สาขา:</strong> {student.group}
-            </p>
-            <p>
-              <strong>ขนาดเสื้อ:</strong> {student.size}
-            </p>
-            <p>
-              <strong>จำนวน:</strong> {student.total}
-            </p>
-            {student.note !== "-" && (
-              <p>
-                <strong>หมายเหตุ:</strong> {student.note}
-              </p>
-            )}
-            <p>
-              <strong>สถานะ:</strong> {student.status}
-            </p>
-          </div>
-          <ButtonSlip photoUrl={student.photo} />
-        </div>
-      )} */}
-
+     {/* footer */}
       <hr className="border-t border-gray-300 my-4" />
       <div className="flex gap-4">
         <ButtonShare />

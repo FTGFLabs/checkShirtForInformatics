@@ -17,7 +17,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="vsc-initialized">
         <div className="min-h-screen overflow-hidden items-center content-center">
+          <div className="flex items-center justify-center">
           {children}
+          </div>
         </div>
         <Toaster position="top-center" richColors />
       </body>
