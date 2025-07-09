@@ -1,7 +1,6 @@
 'use client'
 import { IoReceiptOutline } from "react-icons/io5";
 
-import { CiImageOn } from "react-icons/ci";
 import { toast } from "sonner";
 
 type ButtonSlipProps = {
@@ -20,11 +19,10 @@ const ButtonSlip = ({ photoUrl }: ButtonSlipProps) => {
   return (
     <button
       onClick={handleOpenSlip}
-      className="cursor-pointer w-full h-10 border border-black/20 rounded-sm text-white bg-green-500 hover:bg-green-600"
+      className="h-10 w-full cursor-pointer rounded-sm border border-black/20 bg-green-500 text-white hover:bg-green-600"
     >
       <div className="flex items-center justify-center gap-2">
-       
-        <IoReceiptOutline  className="text-xl"/>
+        <IoReceiptOutline className="text-xl" />
         <p>กดเพื่อดูสลิป</p>
       </div>
     </button>

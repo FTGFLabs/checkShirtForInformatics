@@ -14,10 +14,10 @@ const ButtonSearch = React.forwardRef<HTMLButtonElement, ButtonSearchProps>(
         ref={ref}
         type="submit"
         disabled={isDisabled}
-        className={`w-full shadow-sm font-semibold py-2 px-4 rounded-md ${
+        className={`w-full rounded-md px-4 py-2 font-semibold shadow-sm ${
           isDisabled
-            ? "opacity-70 border border-black/20 cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700 text-white"
+            ? "cursor-not-allowed border border-black/20 opacity-70"
+            : "bg-blue-600 text-white hover:bg-blue-700"
         } ${className}`}
         {...props}
       >
