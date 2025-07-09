@@ -30,7 +30,7 @@ const ButtonContact = () => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="shadow opacity-70 cursor-pointer w-full h-10 border border-black/20  rounded-sm text-black bg-white hover:bg-gray-100"
+        className="h-10 w-full cursor-pointer rounded-sm border border-black/20 bg-white text-black opacity-70 shadow hover:bg-gray-100"
       >
         <div className="flex items-center justify-center gap-1 font-semibold">
           <GrContact />
@@ -39,26 +39,26 @@ const ButtonContact = () => {
       </button>
 
       {open && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+          <div className="animate-fadeIn relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
             <button
               onClick={() => setOpen(false)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-3xl font-bold cursor-pointer transition-colors duration-200"
+              className="absolute top-3 right-3 cursor-pointer text-3xl font-bold text-gray-400 transition-colors duration-200 hover:text-gray-700"
               aria-label="Close modal"
             >
               &times;
             </button>
-            <h2 className="text-2xl font-bold mb-4 text-center">ติดต่อเรา</h2>
+            <h2 className="mb-4 text-center text-2xl font-bold">ติดต่อเรา</h2>
 
             <div className="space-y-4 text-center text-gray-700">
               <p className="font-semibold">ช่องทางการติดต่อ</p>
 
-              <div className="flex justify-center gap-6 text-blue-600 text-xl">
+              <div className="flex justify-center gap-6 text-xl text-blue-600">
                 <a
                   href="https://www.facebook.com/SmoInformaticsBuu"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-blue-800 transition-colors"
+                  className="transition-colors hover:text-blue-800"
                   aria-label="Facebook"
                 >
                   <FaFacebookF />
@@ -67,7 +67,7 @@ const ButtonContact = () => {
                   href="https://www.instagram.com/smoif.buu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-pink-600 transition-colors"
+                  className="transition-colors hover:text-pink-600"
                   aria-label="Instagram"
                 >
                   <FaInstagram />
@@ -76,20 +76,22 @@ const ButtonContact = () => {
                   href="https://x.com/smoif_buu?s=21"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-gray-800 transition-colors"
+                  className="transition-colors hover:text-gray-800"
                   aria-label="X Twitter"
                 >
                   <FaSquareXTwitter />
                 </a>
               </div>
 
-              <p className="font-semibold">อีเมลสำหรับติดต่อ (แตะเพื่อคัดลอก)</p>
+              <p className="font-semibold">
+                อีเมลสำหรับติดต่อ (แตะเพื่อคัดลอก)
+              </p>
               <div className="flex flex-col gap-2">
                 {[email].map((email) => (
                   <button
                     key={email}
                     onClick={() => copyToClipboard(email)}
-                    className="bg-gray-100 hover:bg-gray-200 transition-colors rounded-md py-2 px-4 cursor-pointer select-all"
+                    className="cursor-pointer rounded-md bg-gray-100 px-4 py-2 transition-colors select-all hover:bg-gray-200"
                     aria-label={`Copy email ${email}`}
                   >
                     {email}

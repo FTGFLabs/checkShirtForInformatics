@@ -24,7 +24,7 @@ const ButtonShare = () => {
   return (
     <button
       onClick={handleShare}
-      className="shadow opacity-70 cursor-pointer w-full h-10 border border-black/20 rounded-sm text-black bg-white hover:bg-gray-100 "
+      className="h-10 w-full cursor-pointer rounded-sm border border-black/20 bg-white text-black opacity-70 shadow hover:bg-gray-100"
     >
       <div className="flex items-center justify-center gap-1 font-semibold">
         <CiShare2 />

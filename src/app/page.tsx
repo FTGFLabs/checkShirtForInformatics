@@ -72,10 +72,10 @@ export default function StudentSearch() {
   };
 
   return (
-    <div className="max-w-md  m-2 p-8 h-auto w-200 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 items-center justify-center content-center ">
+    <div className="m-2 h-auto w-200 max-w-md content-center items-center justify-center space-y-2 rounded-sm bg-[#FFF] p-8 font-sans text-black shadow-xl">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold text-center">ตรวจสอบเสื้อโปโล</h1>
-        <h2 className="text-sm text-center text-gray-400">
+        <h1 className="text-center text-2xl font-semibold">ตรวจสอบเสื้อโปโล</h1>
+        <h2 className="text-center text-sm text-gray-400">
           คณะวิทยาการสารสนเทศ มหาวิทยาลัยบูรพา
         </h2>
       </div>
@@ -87,7 +87,7 @@ export default function StudentSearch() {
         }}
         className="space-y-2"
       >
-        <div className="flex content-center gap-2 items-center">
+        <div className="flex content-center items-center gap-2">
           <FaUser />
           <h3>รหัสนิสิต</h3>
         </div>
@@ -108,9 +108,9 @@ export default function StudentSearch() {
           type="submit"
           className={`w-full shadow-sm ${
             searchId.length !== 8
-              ? "opacity-70 border border-black/20 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 text-white"
-          }   font-semibold py-2 px-4 rounded-md shadow`}
+              ? "cursor-not-allowed border border-black/20 opacity-70"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+          } rounded-md px-4 py-2 font-semibold shadow`}
         >
           ค้นหา
         </button>
@@ -118,8 +118,8 @@ export default function StudentSearch() {
 
       {/* show when have data */}
       {student && (
-        <div className="mt-6 p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-800">
-          <h2 className="text-xl font-semibold mb-4 text-center">
+        <div className="mt-6 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-800 shadow-md">
+          <h2 className="mb-4 text-center text-xl font-semibold">
             ข้อมูลนิสิต
           </h2>
           <div className="space-y-2 text-base">
@@ -153,8 +153,8 @@ export default function StudentSearch() {
         </div>
       )}
 
-     {/* footer */}
-      <hr className="border-t border-gray-300 my-4" />
+      {/* footer */}
+      <hr className="my-4 border-t border-gray-300" />
       <div className="flex gap-4">
         <ButtonShare />
         <ButtonContact />
