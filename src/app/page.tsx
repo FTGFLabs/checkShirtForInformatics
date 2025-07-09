@@ -70,7 +70,7 @@ export default function StudentSearch() {
   };
 
   return (
-    <div className="max-w-md mx-4 my-2 md:mx-auto p-8 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 ">
+    <div className="max-w-md  m-4 p-8 h-auto w-200 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 items-center justify-center content-center ">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold text-center">ตรวจสอบเสื้อโปโล</h1>
         <h2 className="text-sm text-center text-gray-400">
