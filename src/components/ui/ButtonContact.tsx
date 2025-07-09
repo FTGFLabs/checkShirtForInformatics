@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import { GrContact } from "react-icons/gr";
 import { toast } from "sonner";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 const ButtonContact = () => {
   const [open, setOpen] = useState(false);
@@ -75,10 +76,10 @@ const ButtonContact = () => {
                   href="https://x.com/smoif_buu?s=21"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-sky-500 transition-colors"
+                  className="hover:text-gray-800 transition-colors"
                   aria-label="X Twitter"
                 >
-                  <FaTwitter />
+                  <FaSquareXTwitter />
                 </a>
               </div>
 
