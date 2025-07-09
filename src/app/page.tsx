@@ -26,9 +26,6 @@ export default function StudentSearch() {
   const [searchId, setSearchId] = useState("");
   const [student, setStudent] = useState<Student | null>(null);
   const [error, setError] = useState("");
-  const titleName = process.env.NEXT_PUBLIC_TITLE_NAME;
-  const subTitleName = process.env.NEXT_PUBLIC_SUB_TITLE_NAME;
-
 
   useEffect(() => {
     fetch("https://opensheet.elk.sh/14qcjBVzPtH6mYoIc_qLKaFhLpNjFtLm-xpotoPSDWts/sheet1")
@@ -75,9 +72,9 @@ export default function StudentSearch() {
   return (
     <div className="max-w-md mx-4 my-2 md:mx-auto p-8 font-sans shadow-xl rounded-sm bg-[#FFF] text-black space-y-2 ">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold text-center">{titleName}</h1>
+        <h1 className="text-2xl font-semibold text-center">ตรวจสอบเสื้อโปโล</h1>
         <h2 className="text-sm text-center text-gray-400">
-          {subTitleName} 
+          คณะวิทยาการสารสนเทศ มหาวิทยาลัยบูรพา
         </h2>
       </div>
 
