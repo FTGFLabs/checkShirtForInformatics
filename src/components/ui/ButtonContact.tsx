@@ -87,16 +87,14 @@ const ButtonContact = () => {
                 อีเมลสำหรับติดต่อ (แตะเพื่อคัดลอก)
               </p>
               <div className="flex flex-col gap-2">
-                {[email].map((email) => (
-                  <button
-                    key={email}
-                    onClick={() => copyToClipboard(email)}
-                    className="cursor-pointer rounded-md bg-gray-100 px-4 py-2 transition-colors select-all hover:bg-gray-200"
-                    aria-label={`Copy email ${email}`}
-                  >
-                    {email}
-                  </button>
-                ))}
+                <button
+                  key={email}
+                  onClick={() => copyToClipboard(email)}
+                  className="cursor-pointer rounded-md bg-gray-100 px-4 py-2 transition-colors select-all hover:bg-gray-200"
+                  aria-label={`Copy email ${email}`}
+                >
+                  {email}
+                </button>
               </div>
             </div>
           </div>
