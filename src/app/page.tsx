@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 
 type Student = {
+  time: string;
   id: string;
   name: string;
   group: string;
@@ -17,14 +18,15 @@ type Student = {
   total: string;
   status: string;
   photo: string;
-  note: string;
+  noteSize: string;
+  noteMore: string;
   [key: string]: string;
 };
 
 export default function StudentSearch() {
   const [data, setData] = useState<Student[]>([]);
   const [searchId, setSearchId] = useState("");
-  const [student, setStudent] = useState<Student | null>(null);
+  const [students, setStudents] = useState<Student[]>([]);
   const [error, setError] = useState("");
   const URL = process.env.NEXT_PUBLIC_URL
 
@@ -41,7 +43,8 @@ export default function StudentSearch() {
           total: row["จำนวนเสื้อโปโล (ตัว)"],
           status: row["สถานะ"],
           photo: row["หลักฐานการชำระเงิน"],
-          note: row["หมายเหตุ กรณีสั่งแยกไซส์"]
+          noteSize: row["หมายเหตุ กรณีสั่งแยกไซส์"],
+          noteMore: row["หมายเหตุเพิ่มเติม"],
         }));
         setData(formatted);
       }).catch((error) =>{
@@ -49,27 +52,29 @@ export default function StudentSearch() {
       });
   }, []);
 
-  
   const handleSearch = () => {
-    if (searchId.length !== 8){
-      toast.error("กรุณากรอกรหัสนิสิตให้ครบ 8 หลัก");  
-      return
+    if (searchId.length !== 8) {
+      toast.error("กรุณากรอกรหัสนิสิตให้ครบ 8 หลัก");
+      return;
     }
 
-    const found = data.find((s) => s.id === searchId.trim());
-    if (found) {
-      setStudent(found);
+    const matched = data.filter((s) => s.id === searchId.trim());
+    // const matched = data.filter((s) => s.id.includes(searchId.trim()));
+
+    if (matched.length > 0) {
+      setStudents(matched);
       setError("");
       setSearchId("");
-      toast.success(`พบข้อมูลนิสิต ${found.id}`);
+      toast.success(`พบการสั่งซื้อ ${matched.length} รายการ`);
     } else {
-      setStudent(null);
+      setStudents([]);
       setError("ไม่พบข้อมูล");
       toast.error("ไม่พบข้อมูลนิสิต", {
         description: "กรุณาตรวจสอบรหัสนิสิตอีกครั้ง",
       });
     }
   };
+
 
   return (
     <div className="m-2 h-auto w-200 max-w-md content-center items-center justify-center space-y-2 rounded-sm bg-[#FFF] p-8 font-sans text-black shadow-xl">
@@ -116,40 +121,66 @@ export default function StudentSearch() {
         </button>
       </form>
 
-      {/* show when have data */}
-      {student && (
-        <div className="mt-6 rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-800 shadow-md">
-          <h2 className="mb-4 text-center text-xl font-semibold">
-            ข้อมูลนิสิต
-          </h2>
-          <div className="space-y-2 text-base">
-            <p>
-              <strong>รหัสนิสิต:</strong> {student.id}
-            </p>
-            <p>
-              <strong>ชื่อ:</strong> {student.name}
-            </p>
-            <p>
-              <strong>สาขา:</strong> {student.group}
-            </p>
-            <p>
-              <strong>ขนาดเสื้อ:</strong> {student.size}
-            </p>
-            <p>
-              <strong>จำนวน:</strong> {student.total}
-            </p>
-            {student.note !== "-" && (
-              <p>
-                <strong>หมายเหตุ:</strong> {student.note}
-              </p>
-            )}
-            <p>
-              <strong>สถานะ:</strong> {student.status}
-            </p>
-          </div>
-          <div className="mt-4 flex justify-center">
-            <ButtonSlip photoUrl={student.photo} />
-          </div>
+
+      {students.length > 0 && (
+        <div className="mt-6 space-y-6">
+          {students.map((student, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-800 shadow-md"
+            >
+              <h2 className="mb-4 text-center text-xl font-semibold">
+                การสั่งซื้อครั้งที่ {index + 1}
+              </h2>
+              <div className="space-y-2 text-base">
+                <p>
+                  <strong>รหัสนิสิต:</strong> {student.id}
+                </p>
+                <p>
+                  <strong>ชื่อ:</strong> {student.name}
+                </p>
+                <p>
+                  <strong>สาขา:</strong> {student.group}
+                </p>
+                <p>
+                  <strong>ขนาดเสื้อ:</strong> {student.size}
+                  <strong> จำนวน:</strong> {student.total} ตัว
+                </p>
+                {student.noteSize !== "-" && (
+                  <p>
+                    <strong>หมายเหตุกรณีสั่งแยกไซส์:</strong> {student.noteSize}
+                  </p>
+                )}
+
+                {/* if have noteMore show it up */}
+                {student.noteMore && (
+                  <p>
+                    <strong>หมายเหตุเพิ่มเติม:</strong>{" "}
+                    {/* check if link with regEx */}
+                    {/^https?:\/\//.test(student.noteMore) ? (
+                      <a
+                        href={student.noteMore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline hover:text-blue-800"
+                      >
+                        เปิดลิงก์
+                      </a>
+                    ) : (
+                      student.noteMore
+                    )}
+                  </p>
+                )}
+
+                <p>
+                  <strong>สถานะ:</strong> {student.status}
+                </p>
+              </div>
+              <div className="mt-4 flex justify-center">
+                <ButtonSlip photoUrl={student.photo} />
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
