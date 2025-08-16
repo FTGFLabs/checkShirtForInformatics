@@ -3,6 +3,7 @@
 :root {
   --background: #F9FAFB; 
   --foreground: #171717;
+  --scroll: #4d4d4d58;
 }
 
 
@@ -11,6 +12,27 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--scroll);
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 body {
