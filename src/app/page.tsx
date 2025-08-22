@@ -74,6 +74,18 @@ export default function StudentSearch() {
       });
     }
   };
+  const getDriveThumbnailUrl = (link: string) => {
+    if (!link) return "";
+    let fileId = "";
+    if (link.includes("id=")) {
+      fileId = link.split("id=")[1];
+    } else if (link.includes("/d/")) {
+      const parts = link.split("/");
+      const idx = parts.indexOf("d");
+      if (idx !== -1 && parts[idx + 1]) fileId = parts[idx + 1];
+    }
+    return fileId ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000` : "";
+  };
 
 
   return (
@@ -177,6 +189,7 @@ export default function StudentSearch() {
                   <strong>สถานะ:</strong> {student.status}
                 </p>
               </div>
+              <img src={getDriveThumbnailUrl(student.photo)} alt={`Photo of ${student.name}`} className="mt-4 w-full rounded-md" />
               <div className="mt-4 flex justify-center">
                 <ButtonSlip photoUrl={student.photo} />
               </div>

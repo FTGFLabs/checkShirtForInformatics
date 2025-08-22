@@ -83,7 +83,7 @@ const ButtonContact = () => {
                 </a>
               </div>
 
-              <p className="font-semibold">
+              {/* <p className="font-semibold">
                 อีเมลสำหรับติดต่อ (แตะเพื่อคัดลอก)
               </p>
               <div className="flex flex-col gap-2">
@@ -95,7 +95,7 @@ const ButtonContact = () => {
                 >
                   {email}
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
