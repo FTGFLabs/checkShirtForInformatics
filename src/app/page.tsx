@@ -135,7 +135,7 @@ export default function StudentSearch() {
 
       {students.length > 0 && (
         <div
-          className={`mt-6 flex flex-col space-y-6 ${students.length > 1 ? "h-100 overflow-y-scroll" : "h-70"}`}
+          className={`mt-6 flex flex-col space-y-6`}
         >
           {students.map((student, index) => (
             <div
