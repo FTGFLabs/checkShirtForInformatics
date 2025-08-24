@@ -31,32 +31,45 @@ export default function StudentSearch() {
   const URL = process.env.NEXT_PUBLIC_URL
 
   useEffect(() => {
-    if (!URL) return;
-    fetch(URL)
-      .then((res) => res.json())
-      .then((json) => {
-        const formatted = json.map((row: Student) => ({
-          id: row["รหัสนิสิต"]?.trim(),
-          name: row["ชื่อ-สกุล"],
-          group: row["สาขา"],
-          size: row["ขนาดเสื้อโปโลที่ต้องการ"],
-          total: row["จำนวนเสื้อโปโล (ตัว)"],
-          status: row["สถานะ"],
-          photo: row["หลักฐานการชำระเงิน"],
-          noteSize: row["หมายเหตุ กรณีสั่งแยกไซส์"],
-          noteMore: row["หมายเหตุเพิ่มเติม"],
-        }));
-        setData(formatted);
-      }).catch((error) =>{
-        toast.error("ไม่สามารถโหลดข้อมูลได้")
-      });
-  }, []);
+      if (!URL) return;
 
-  const handleSearch = () => {
-    if (searchId.length !== 8) {
-      toast.error("กรุณากรอกรหัสนิสิตให้ครบ 8 หลัก");
-      return;
-    }
+      const fetchData = () => {
+        fetch(`${URL}?t=${Date.now()}`) // ป้องกัน cache
+          .then((res) => res.json())
+          .then((json) => {
+            const formatted = json.map((row: Student) => ({
+              id: row["รหัสนิสิต"]?.trim(),
+              name: row["ชื่อ-สกุล"],
+              group: row["สาขา"],
+              size: row["ขนาดเสื้อโปโลที่ต้องการ"],
+              total: row["จำนวนเสื้อโปโล (ตัว)"],
+              status: row["สถานะ"],
+              photo: row["หลักฐานการชำระเงิน"],
+              noteSize: row["หมายเหตุ กรณีสั่งแยกไซส์"],
+              noteMore: row["หมายเหตุเพิ่มเติม"],
+            }));
+            setData(formatted);
+          })
+          .catch(() => toast.error("ไม่สามารถโหลดข้อมูลได้"));
+      };
+
+      fetchData(); // ดึงตอนเริ่ม
+      const interval = setInterval(fetchData, 5000); // ดึงซ้ำทุก 5 วิ
+      return () => clearInterval(interval);
+    }, [URL]);
+
+    useEffect(() => {
+      if (searchId.length === 8){
+        const matched = data.filter((s) => s.id === searchId.trim());
+        setStudents(matched);
+      } 
+    }, [data]);
+
+    const handleSearch = () => {
+      if (searchId.length !== 8) {
+        toast.error("กรุณากรอกรหัสนิสิตให้ครบ 8 หลัก");
+        return;
+      }
 
     const matched = data.filter((s) => s.id === searchId.trim());
     // const matched = data.filter((s) => s.id.includes(searchId.trim()));
@@ -64,7 +77,6 @@ export default function StudentSearch() {
     if (matched.length > 0) {
       setStudents(matched);
       setError("");
-      setSearchId("");
       toast.success(`พบการสั่งซื้อ ${matched.length} รายการ`);
     } else {
       setStudents([]);
