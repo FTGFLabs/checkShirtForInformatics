@@ -4,8 +4,9 @@ import { SheetRow } from "@/types/student";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id")?.trim();
+  const warm = searchParams.get("warm")?.trim() === "true";
 
-  if (!id) {
+  if (!id && !warm) {
     return NextResponse.json({ error: "กรุณาระบุรหัสนิสิต" }, { status: 400 });
   }
 
@@ -16,7 +17,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    // Next.js automatically caches fetches by default in version 15 unless configured otherwise
+    // We cache on the server for 60 seconds to ensure high performance
+    const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) {
       console.error(`Failed to fetch from sheet: ${res.statusText}`);
       return NextResponse.json({ error: "ไม่สามารถเชื่อมต่อฐานข้อมูลได้" }, { status: 502 });
@@ -26,6 +29,11 @@ export async function GET(request: Request) {
     if (!Array.isArray(data)) {
       console.error("Sheet data is not an array:", data);
       return NextResponse.json({ error: "ข้อมูลจากฐานข้อมูลไม่ถูกต้อง" }, { status: 502 });
+    }
+
+    // If it's a cache warming request, we return early without any student data
+    if (warm) {
+      return NextResponse.json({ success: true, warmed: true });
     }
 
     const rows = data as SheetRow[];

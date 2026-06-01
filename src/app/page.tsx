@@ -3,7 +3,7 @@ import ButtonContact from "@/components/ui/ButtonContact";
 import ButtonShare from "@/components/ui/ButtonShare";
 
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import ButtonSlip from "@/components/ui/ButtonSlip";
 import Footer from "@/components/Footer";
@@ -15,6 +15,13 @@ export default function StudentSearch() {
   const [searchId, setSearchId] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Warm the cache in background on page load
+    fetch("/api/search?warm=true").catch((err) => {
+      console.error("Cache warming failed:", err);
+    });
+  }, []);
 
   const handleSearch = async () => {
     if (searchId.length !== 8) {
