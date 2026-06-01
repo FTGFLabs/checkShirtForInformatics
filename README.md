@@ -31,7 +31,7 @@ This is a project for SMO of Informatics, Burapha University.
         SHEET_API_URL=https://opensheet.elk.sh/"SHEET_ID"/"SHEET_NAME"
         ```
 
-4. Start development
+4. **Start development**
     ```bash
     npm run dev
     ```
