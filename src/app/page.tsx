@@ -3,76 +3,53 @@ import ButtonContact from "@/components/ui/ButtonContact";
 import ButtonShare from "@/components/ui/ButtonShare";
 
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import ButtonSlip from "@/components/ui/ButtonSlip";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 
-type Student = {
-  time: string;
-  id: string;
-  name: string;
-  group: string;
-  size: string;
-  total: string;
-  status: string;
-  photo: string;
-  noteSize: string;
-  noteMore: string;
-  [key: string]: string;
-};
-
-const URL = process.env.NEXT_PUBLIC_URL;
+import { Student } from "@/types/student";
 
 export default function StudentSearch() {
-  const [data, setData] = useState<Student[]>([]);
   const [searchId, setSearchId] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!URL) return;
-    fetch(URL)
-      .then((res) => res.json())
-      .then((json) => {
-        const formatted = json.map((row: Student) => ({
-          id: row["รหัสนิสิต"]?.trim(),
-          name: row["ชื่อ-สกุล"],
-          group: row["สาขา"],
-          size: row["ขนาดเสื้อโปโลที่ต้องการ"],
-          total: row["จำนวนเสื้อโปโล (ตัว)"],
-          status: row["สถานะ"],
-          photo: row["หลักฐานการชำระเงิน"],
-          noteSize: row["หมายเหตุ กรณีสั่งแยกไซส์"],
-          noteMore: row["หมายเหตุเพิ่มเติม"],
-        }));
-        setData(formatted);
-      }).catch((error) =>{
-        console.error(error);
-        toast.error("ไม่สามารถโหลดข้อมูลได้")
-      });
-  }, []);
-
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchId.length !== 8) {
       toast.error("กรุณากรอกรหัสนิสิตให้ครบ 8 หลัก");
       return;
     }
 
-    const matched = data.filter((s) => s.id === searchId.trim());
-    // const matched = data.filter((s) => s.id.includes(searchId.trim()));
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/search?id=${searchId.trim()}`);
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "เกิดข้อผิดพลาดในการดึงข้อมูล");
+      }
 
-    if (matched.length > 0) {
-      setStudents(matched);
-      setSearchId("");
-      toast.success(`พบการสั่งซื้อ ${matched.length} รายการ`);
-    } else {
-      setStudents([]);
-      toast.error("ไม่พบข้อมูลนิสิต", {
-        description: "กรุณาตรวจสอบรหัสนิสิตอีกครั้ง",
-      });
+      const { data } = await res.json();
+      if (data && data.length > 0) {
+        setStudents(data);
+        setSearchId("");
+        toast.success(`พบการสั่งซื้อ ${data.length} รายการ`);
+      } else {
+        setStudents([]);
+        toast.error("ไม่พบข้อมูลนิสิต", {
+          description: "กรุณาตรวจสอบรหัสนิสิตอีกครั้ง",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      const err = error as Error;
+      toast.error(err.message || "ไม่สามารถโหลดข้อมูลได้");
+    } finally {
+      setLoading(false);
     }
   };
+
   const getDriveThumbnailUrl = (link: string) => {
     if (!link) return "";
     let fileId = "";
@@ -112,6 +89,7 @@ export default function StudentSearch() {
           maxLength={8}
           placeholder="กรอกรหัสนิสิต 8 หลัก"
           value={searchId}
+          disabled={loading}
           onChange={(e) => {
             // regEx limit number length 8
             const value = e.target.value;
@@ -122,13 +100,14 @@ export default function StudentSearch() {
         />
         <button
           type="submit"
+          disabled={loading || searchId.length !== 8}
           className={`w-full shadow-sm ${
-            searchId.length !== 8
+            loading || searchId.length !== 8
               ? "cursor-not-allowed border border-black/20 opacity-70"
               : "bg-blue-600 text-white hover:bg-blue-700"
           } rounded-md px-4 py-2 font-semibold shadow`}
         >
-          ค้นหา
+          {loading ? "กำลังค้นหา..." : "ค้นหา"}
         </button>
       </form>
 
