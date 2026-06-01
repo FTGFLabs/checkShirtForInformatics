@@ -1,6 +1,6 @@
 {
-  "name": "sheetsmo",
-  "version": "1.0.0",
+  "name": "check-shirt-for-informatics",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -30,5 +30,10 @@
   },
   "bundleDependencies": [
     "react-icons"
-  ]
+  ],
+  "author": {
+    "name": "FTGFLabs",
+    "email": "ftgflabs@gmail.com",
+    "url": "https://github.com/FTGFLabs"
+  }
 }
