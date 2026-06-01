@@ -13,7 +13,7 @@ This is a project for SMO of Informatics, Burapha University.
 ### Installation
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/TAHPAPANGKORN/checkShirtForInformatics.git
+    git clone https://github.com/FTGFLabs/checkShirtForInformatics.git
     cd checkShirtForInformatics
     ```
 
