@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from 'sonner'
-import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "informatics shirt",

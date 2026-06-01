@@ -23,12 +23,12 @@ type Student = {
   [key: string]: string;
 };
 
+const URL = process.env.NEXT_PUBLIC_URL;
+
 export default function StudentSearch() {
   const [data, setData] = useState<Student[]>([]);
   const [searchId, setSearchId] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
-  const [error, setError] = useState("");
-  const URL = process.env.NEXT_PUBLIC_URL
 
   useEffect(() => {
     if (!URL) return;
@@ -48,6 +48,7 @@ export default function StudentSearch() {
         }));
         setData(formatted);
       }).catch((error) =>{
+        console.error(error);
         toast.error("ไม่สามารถโหลดข้อมูลได้")
       });
   }, []);
@@ -63,12 +64,10 @@ export default function StudentSearch() {
 
     if (matched.length > 0) {
       setStudents(matched);
-      setError("");
       setSearchId("");
       toast.success(`พบการสั่งซื้อ ${matched.length} รายการ`);
     } else {
       setStudents([]);
-      setError("ไม่พบข้อมูล");
       toast.error("ไม่พบข้อมูลนิสิต", {
         description: "กรุณาตรวจสอบรหัสนิสิตอีกครั้ง",
       });
@@ -188,6 +187,7 @@ export default function StudentSearch() {
                   <strong>สถานะ:</strong> {student.status}
                 </p>
               </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={getDriveThumbnailUrl(student.photo)} alt={`Photo of ${student.name}`} className="mt-4 w-full rounded-md" />
               <div className="mt-4 flex justify-center">
                 <ButtonSlip photoUrl={student.photo} />

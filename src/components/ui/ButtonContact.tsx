@@ -1,13 +1,12 @@
 'use client'
 import { useState, useEffect } from "react";
 import { GrContact } from "react-icons/gr";
-import { toast } from "sonner";
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 const ButtonContact = () => {
   const [open, setOpen] = useState(false);
-  const email = "smoif.burapha@example.com";
+  // const email = "smoif.burapha@example.com";
   
 
   useEffect(() => {
@@ -21,10 +20,10 @@ const ButtonContact = () => {
     };
   }, [open]);
 
-  const copyToClipboard = (email: string) => {
-    navigator.clipboard.writeText(email);
-    toast.success(`${email} copied to clipboard!`);
-  };
+  // const copyToClipboard = (email: string) => {
+  //   navigator.clipboard.writeText(email);
+  //   toast.success(`${email} copied to clipboard!`);
+  // };
 
   return (
     <>
